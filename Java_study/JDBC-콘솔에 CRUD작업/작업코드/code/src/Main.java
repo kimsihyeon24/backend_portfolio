@@ -53,11 +53,15 @@ class UserInterface {
         return productJdbc.update(p);
     }
 
+    public int clearProduct() throws SQLException {
+        return productJdbc.clearAll();
+    }
+
     public void run() throws SQLException {
         int menu = -1;
         Scanner sc = new Scanner(System.in);
         while (menu != 0) {
-            System.out.println("[1] 상품 추가\t [2] 상품 조회\t [3] 상품 삭제\t [4]상품 수정\t[0] 종료");
+            System.out.println("[1] 상품 추가\t [2] 상품 조회\t [3] 상품 삭제\t [4]상품 수정\t [5]비우기 \t[0] 종료");
             switch (menu = sc.nextInt()) {
                 case 1:
                     int result1 = insertProduct();
@@ -79,6 +83,16 @@ class UserInterface {
                         System.out.println("해당 상품명이 존재하지 않습니다.");
                     }
                     break;
+                case 5:
+                    int result5 = clearProduct();
+                    if (result5 > 0) {
+                        System.out.println("비웠습니다.");
+                    }
+                    else {
+                        System.out.println("실패했습니다.");
+                    }
+                    break;
+
                 case 0:
                     System.out.println("종료합니다.");
                     break;
@@ -90,9 +104,12 @@ class UserInterface {
     }
 }
 
+
+
 public class Main {
     public static void main(String[] args) throws SQLException {
         UserInterface ui = new UserInterface();
         ui.run();
+
     }
 }

@@ -21,7 +21,6 @@ public class ProductJdbc {
          ps.setInt(3, stock);
 
          return ps.executeUpdate(); // 성공하면 1
-
     }
     // 전체 조회
     public List<ProductData> findAll() throws SQLException {
@@ -48,8 +47,8 @@ public class ProductJdbc {
     public int deleteById(String name) throws SQLException{
         String sql = "DELETE FROM product WHERE name = ?";
 
-        var conn = DBUtil.getConnection();
-        var ps = conn.prepareStatement(sql);
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql);
 
         ps.setString(1, name);
         return ps.executeUpdate(); // 성공: 1, 실패(없음): 0
@@ -59,8 +58,8 @@ public class ProductJdbc {
     public int update(ProductData p) throws SQLException{
         String sql = "UPDATE product SET name = ?, price = ?, stock = ? WHERE id = ?";
 
-        var conn = DBUtil.getConnection();
-        var ps = conn.prepareStatement(sql);
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql);
 
         ps.setString(1, p.getName());
         ps.setInt(2, p.getPrice());
@@ -70,6 +69,14 @@ public class ProductJdbc {
         return ps.executeUpdate(); // 성공: 1, 실패: 0
     }
 
+    // db 비우기
+    public int clearAll() throws SQLException {
+        String sql = "DELETE FROM product";
+        Connection conn = DBUtil.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql);
+
+        return ps.executeUpdate();
+    }
 }
 
 
