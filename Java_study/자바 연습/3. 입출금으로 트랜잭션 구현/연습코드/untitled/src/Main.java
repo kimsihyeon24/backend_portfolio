@@ -75,17 +75,21 @@ class UserInterface {
         int amount = Integer.parseInt(sc.nextLine());
 
         transferService.transfer(from, to, amount);
-        System.out.println("이체 완료@@!!");
     }
 }
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException, SQLException, ClassNotFoundException {
         AccountDao accountDao = new JdbcAccountDao();
         ConnectionManager connectionManager = new ConnectionManager();
         TransferService transferService = new TransferService(connectionManager, accountDao);
-        UserInterface ui = new UserInterface(transferService);
-        ui.run();
+//        UserInterface ui = new UserInterface(transferService);
+//        ui.run();
+        // 테스트 실행 (A -> B 동시에 1000번)
+        ConcurrencyTestRunner.run(transferService);
+//
+//        // 끝나고 전체 조회로 잔액 확인
+        transferService.getAllAccounts().forEach(System.out::println);
     }
 }
