@@ -10,7 +10,7 @@ public class Main {
                 "===== My Spring-like Framework Application Start =====");
 
         //1. MyApplicationContext 초기화 (컨테이너 생성 및 빈 스캔, 생성, 주입 시작)
-        // "myapp" 패키지 내의 @MyComponent를 찾도록 지시
+        // "app" 패키지 내의 @MyComponent를 찾도록 지시
         MyApplicationContext context = new MyApplicationContext("app");
 
         System.out.println("\n--- Get bean from context ---");
