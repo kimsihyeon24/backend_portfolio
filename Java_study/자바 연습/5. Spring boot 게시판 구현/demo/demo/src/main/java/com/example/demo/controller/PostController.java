@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.domain.Comment;
+import com.example.demo.service.CommentService;
 import com.example.demo.service.PostService;
 import com.example.demo.domain.Post;
 import lombok.RequiredArgsConstructor;
@@ -14,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-@RequiredArgsConstructor // PostService를 자동으로 주입받기 위해 사용
+@RequiredArgsConstructor
 public class PostController {
 
     private final PostService postService;
+    private final CommentService commentService;
 
     // 1. 게시글 목록 조회
     @GetMapping("/posts")
@@ -43,13 +46,14 @@ public class PostController {
         return "redirect:/posts"; // 저장 후 목록 페이지로 리다이렉트
     }
 
-
     // 1. 상세 페이지 조회
     @GetMapping("/posts/{id}")
     public String detail(@PathVariable Long id, Model model) {
         Post post = postService.findById(id);
+        List<Comment> comments = commentService.findCommentsByPost(id);
         model.addAttribute("post", post);
-        return "posts/postDetail"; // templates/posts/postDetail.html 생성 예정
+        model.addAttribute("comments", comments);
+        return "posts/postDetail";
     }
 
     // 2. 게시글 삭제 로직
@@ -59,14 +63,12 @@ public class PostController {
         return "redirect:/posts"; // 삭제 후 목록으로 이동
     }
 
-    // PostController.java에 추가
-
     // 1. 수정 폼으로 이동
     @GetMapping("/posts/{id}/edit")
     public String editForm(@PathVariable Long id, Model model) {
         Post post = postService.findById(id);
         model.addAttribute("post", post);
-        return "posts/editPostForm"; // 이따가 만들 HTML 파일명
+        return "posts/editPostForm";
     }
 
     // 2. 실제 수정 로직 처리
