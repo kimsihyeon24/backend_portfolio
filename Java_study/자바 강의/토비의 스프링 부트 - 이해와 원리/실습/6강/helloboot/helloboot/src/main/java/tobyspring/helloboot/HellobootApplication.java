@@ -2,6 +2,7 @@ package tobyspring.helloboot;
 
 
 import org.springframework.beans.BeansException;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.tomcat.servlet.TomcatServletWebServerFactory;
 import org.springframework.boot.web.server.WebServer;
 import org.springframework.boot.web.server.servlet.ServletWebServerFactory;
@@ -25,6 +26,6 @@ public class HellobootApplication {
     }
 
     public static void main(String[] args) {
-        MySpringApplication.run(HellobootApplication.class, args);
+        SpringApplication.run(HellobootApplication.class, args);
     }
 }
