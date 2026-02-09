@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/shop?useSSL=false&serverTimezone=UTC
+    username: root        # 본인의 MySQL 계정명
+    password: 1234 # 본인의 MySQL 비밀번호
+
+  jpa:
+    hibernate:
+      ddl-auto: update    # Entity 변경 시 테이블 구조 자동 반영
+    show-sql: true        # 실행되는 SQL을 콘솔에 출력
+    properties:
+      hibernate:
+        format_sql: true  # SQL을 보기 좋게 정렬
